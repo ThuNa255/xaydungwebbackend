@@ -23,7 +23,8 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --o
 # Cấp quyền cho thư mục
 RUN chmod -R 775 storage bootstrap/cache
 
-EXPOSE 10000
+# Sửa dòng EXPOSE (Railway sẽ tự quản lý, nhưng để $PORT cho chuẩn)
+EXPOSE 8080
 
-# Lệnh khởi chạy
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# Sửa lệnh CMD để nhận biến PORT từ hệ thống
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
